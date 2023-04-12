@@ -113,6 +113,14 @@ const columns = [
         worksheet.mergeCells('Z34', 'AH34');
         worksheet.mergeCells('D35', 'P35');
         worksheet.mergeCells('U35', 'AH35');
+        worksheet.mergeCells('K36', 'N36');
+        worksheet.mergeCells('K37', 'N37');
+        worksheet.mergeCells('K38', 'N38');
+        worksheet.mergeCells('R39', 'X39');
+        worksheet.mergeCells('Y39', 'AH39');
+        worksheet.mergeCells('R40', 'X40');
+        worksheet.mergeCells('Y40', 'AH40');
+        worksheet.mergeCells('J41', 'AH41');
         const title = worksheet.getRow(3);
         title.height = 40;
 
@@ -267,6 +275,29 @@ const columns = [
         worksheet.getCell('U35', 'AH35').value ='07/02/2022';
         worksheet.getCell('U35', 'AH35').alignment = { vertical: 'middle', horizontal: 'center' };
 
+        worksheet.getCell('C36').value ='Số lượng';
+        worksheet.getCell('K36', 'N36').value ='480';
+        worksheet.getCell('K36', 'N36').alignment = { vertical: 'middle', horizontal: 'right' };
+        worksheet.getCell('P36').value ='PK';
+        worksheet.getCell('R36').value ='Kí hiệu và số liệu';
+
+        worksheet.getCell('C37').value ='Tổng trọng lượng hàng (Gross)';
+        worksheet.getCell('K37', 'N37').value ='179.840';
+        worksheet.getCell('K37', 'N37').alignment = { vertical: 'middle', horizontal: 'right' };
+        worksheet.getCell('P37').value ='KGM';
+
+        worksheet.getCell('C38').value ='Số lượng container';
+        worksheet.getCell('K38', 'N38').value ='10';
+        worksheet.getCell('K38', 'N38').alignment = { vertical: 'middle', horizontal: 'right' };
+
+        worksheet.getCell('R39', 'X39').value ='Ngày được phép nhập kho đầu tiên';
+
+        worksheet.getCell('R40', 'X40').value ='Mã văn bản pháp quy khác';
+        worksheet.getCell('Y40', 'AH40').value ='MO';
+        worksheet.getCell('Y40', 'AH40').alignment = { vertical: 'middle', horizontal: 'center' };
+
+        worksheet.getCell('C41').value ='Số hóa đơn';
+
         const row9 = worksheet.getRows(9, 1);
         row9.forEach(item => item.border ={top: { style: 'thin' }})
 
@@ -275,6 +306,9 @@ const columns = [
 
         const row30 = worksheet.getRows(30, 1);
         row30.forEach(item => item.border ={top: { style: 'thin' },})
+
+        const row41 = worksheet.getRows(41, 1);
+        row41.forEach(item => item.border ={top: { style: 'thin' },})
 
         worksheet.getCell('P30').border = {right: { style: 'thin'}, top: { style: 'thin'}}
         for(let i = 31; i <= 40; i++){

@@ -7,7 +7,7 @@ import ReadFile from "./components/read";
 
 
 function App() {
-  return <ReadFile />
+  return <Excel2 />
 }
 
 export default App;
