@@ -23,27 +23,30 @@ function Excel() {
  
         // Create a new workbook and worksheet using ExcelJS
         const workbook = new ExcelJS.Workbook();
-        //const worksheet = workbook.addWorksheet(workSheetName);
-        const worksheet =  workbook.addWorksheet(workSheetName, {
-            pageSetup:{paperSize: 9, orientation:'landscape'}
-        });
+        const worksheet = workbook.addWorksheet(workSheetName, {properties:{tabColor:{argb:'FFC0000'}}});
+
+        // gộp dònng theo ô trên excel 
         worksheet.mergeCells('A2', 'I2');
 
-        const customCell = worksheet.getCell("A2");
-        customCell.font = {
-            name: "Comic Sans MS",
-            family: 4,
-            size: 5,
-            underline: true,
-            bold: true
-        };
+        // create some style for sheet
+        //const worksheet = workbook.addWorksheet('My Sheet', {properties:{tabColor:{argb:'FFC0000'}}}, {views:[{state: 'frozen', xSplit: 4, ySplit:1}]});
+        worksheet.getRow(1).font = { bold: true };
+
+        // const customCell = worksheet.getCell("A2");
+        // customCell.font = {
+        //     name: "Comic Sans MS",
+        //     family: 4,
+        //     size: 5,
+        //     underline: true,
+        //     bold: true
+        // };
  
         // Add the column names to the worksheet
         const headerRow = worksheet.addRow([]);
         worksheet.getRow(4).font = { bold: true };
         const headerCells = htmlTable.getElementsByTagName('th');
-        for (let i = 0; i < headerCells.length; i++) {
-            headerRow.getCell(i + 1).value = headerCells[i].innerText;
+            for (let i = 0; i < headerCells.length; i++) {
+                headerRow.getCell(i + 1).value = headerCells[i].innerText;
         }
  
         // Add the HTML table data to the worksheet
@@ -60,63 +63,46 @@ function Excel() {
 
         worksheet.columns.forEach(column => {
             column.width = headerCells.length + 10
-            column.alignment = { horizontal: 'right' };
+            column.alignment = { horizontal: 'left' };
         });
 
-        worksheet.autoFilter = {
-            from: {
-              row: 4,
-              column: 1
-            },
-            to: {
-              row: 4,
-              column: 10
-            }
-        };
+        // auto create a row fillter
+        // worksheet.autoFilter = {
+        //     from: {
+        //       row: 4,
+        //       column: 1
+        //     },
+        //     to: {
+        //       row: 4,
+        //       column: 10
+        //     }
+        // };
 
-        worksheet.eachRow({ includeEmpty: false }, row => {
-            // store each cell to currentCell
-            const currentCell = row._cells;
+        // worksheet.eachRow({ includeEmpty: false }, row => {
+        //     // store each cell to currentCell
+        //     const currentCell = row._cells;
     
-            // loop through currentCell to apply border only for the non-empty cell of excel
-            currentCell.forEach(singleCell => {
-              // store the cell address i.e. A1, A2, A3, B1, B2, B3, ...
-              const cellAddress = singleCell._address;
+        //     // loop through currentCell to apply border only for the non-empty cell of excel
+        //     currentCell.forEach(singleCell => {
+        //       // store the cell address i.e. A1, A2, A3, B1, B2, B3, ...
+        //       const cellAddress = singleCell._address;
     
-              // apply border
-              worksheet.getCell(cellAddress).border = {
-                top: { style: 'thin' },
-                left: { style: 'thin' },
-                bottom: { style: 'thin' },
-                right: { style: 'thin' }
-              };
-            });
-        });
+        //       // apply border
+        //       worksheet.getCell(cellAddress).border = {
+        //         top: { style: 'thin' },
+        //         left: { style: 'thin' },
+        //         bottom: { style: 'thin' },
+        //         right: { style: 'thin' }
+        //       };
+        //     });
+        // });
 
-        worksheet.eachRow({ includeEmpty: false }, row => {
-            // store each cell to currentCell
-            const currentCell = row._cells;
-    
-            // loop through currentCell to apply border only for the non-empty cell of excel
-            currentCell.forEach(singleCell => {
-              // store the cell address i.e. A1, A2, A3, B1, B2, B3, ...
-              const cellAddress = singleCell._address;
-    
-              // apply border
-              worksheet.getCell(cellAddress).border = {
-                top: { style: 'thin' },
-                left: { style: 'thin' },
-                bottom: { style: 'thin' },
-                right: { style: 'thin' }
-              };
-            });
-        });
  
         // Generate a blob object from the workbook and download it as an attachment
         const buf = await workbook.xlsx.writeBuffer();
-        workbook.xlsx.writeBuffer().then(function (buffer) {
-            const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-        });
+        // workbook.xlsx.writeBuffer().then(function (buffer) {
+        //     const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        // });
         saveAs(new Blob([buf]), `${fileName}.xlsx`);
     }
 
